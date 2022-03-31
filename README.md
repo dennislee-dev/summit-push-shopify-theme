@@ -1,0 +1,1 @@
+# summit-push-shopify-theme
