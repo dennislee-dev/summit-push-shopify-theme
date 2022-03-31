@@ -1,0 +1,11 @@
+<div id="app">
+  {% section 'page-register-header' %}
+  <portal-target name="announcement"></portal-target>
+  {% section 'page-register-form' %}
+</div>
+
+<script>
+  window.api_url = '{{ settings.api_url }}';
+</script>
+{{ 'ifit.css' | asset_url | stylesheet_tag }}
+{{ 'ifit.js' | asset_url | script_tag }}

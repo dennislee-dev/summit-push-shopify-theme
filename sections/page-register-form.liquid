@@ -1,0 +1,27 @@
+<div class="register__form tw-bg-ev-black tw-py-10 md:tw-py-24">
+    <div class="tw-container tw-mx-auto tw-px-4 md:tw-px-6">
+        <div class="tw-flex tw-flex-col md:tw-flex-row tw-px-4 md:tw-px-0">
+            <div class="md:tw-w-2/5 lg:tw-w-1/2 lg:tw-mb-20 md:tw-pr-20 lg:tw-pr-32 register__form__instructions">
+                {{ section.settings.intro }}
+
+                <p>We will see you <span id="event-date"></span></p>
+            </div>
+            <div class="md:tw-w-3/5 lg:tw-w-1/2">
+                <div id="register-form"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Registration Form",
+    "settings": [
+        {
+            "type": "textarea",
+            "id": "intro",
+            "label": "Introduction",
+            "default": "<p>Please take a moment to fill out and verify the following information before your event.</p>"
+        }
+    ]
+}
+{% endschema %}

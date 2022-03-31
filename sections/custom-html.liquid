@@ -1,0 +1,41 @@
+{%- liquid 
+  assign video = product.metafields.ticket.video_embed
+-%}
+
+<div {% if video %}id="video"{% endif %} class="container {{ section.settings.css_class }}">
+    {% if video %}
+        {{ video }}
+    {% else %}
+        {{ section.settings.custom_html }}
+    {% endif %}
+</div>
+<style>
+    .custom-html{
+        margin-bottom:10vh;
+    }
+</style>
+{% schema %}
+{
+  "name": "Embed Video HTML",
+  "tag": "section",
+  "class": "custom-html mt-0",
+  "settings": [
+    {
+      "type": "html",
+      "id": "custom_html",
+      "label": "Custom HTML",
+      "info": "Add Custom HTML here"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Embed Video HTML"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,77 @@
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+
+{% if product == blank %}
+    {% assign product = all_products['snowbasin-ut'] %}
+{% endif %}
+
+<div id="the-experience">
+    <h2 class="image-with-text__heading h1">
+        {{ section.settings.heading | escape }}
+    </h2>
+    <div class="container text-experience-container my-5">
+        <p class="text-white">
+            {{ product.metafields.ticket.experience_description }}
+        </p>
+    </div>
+    <div class="image-with-text page-width">
+        <div class="image-with-text__grid">
+            <div class="grid__item">
+                <div class="image-with-text__media media-container">
+                    {%- if section.settings.image != blank -%}
+                    <img
+                        srcset="{%- if section.settings.image.width >= 165 -%}{{ section.settings.image | img_url: '165x' }} 165w,{%- endif -%}
+                        {%- if section.settings.image.width >= 360 -%}{{ section.settings.image | img_url: '360x' }} 360w,{%- endif -%}
+                        {%- if section.settings.image.width >= 535 -%}{{ section.settings.image | img_url: '535x' }} 535w,{%- endif -%}
+                        {%- if section.settings.image.width >= 750 -%}{{ section.settings.image | img_url: '750x' }} 750w,{%- endif -%}
+                        {%- if section.settings.image.width >= 1070 -%}{{ section.settings.image | img_url: '1070x' }} 1070w,{%- endif -%}
+                        {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | img_url: '1500x' }} 1500w,{%- endif -%}
+                        {{ section.settings.image | img_url: 'master' }} {{ section.settings.image.width }}w"
+                        src="{{ section.settings.image | img_url: '1060x' }}"
+                        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+                        alt="{{ section.settings.image.alt | escape }}"
+                        loading="lazy"
+                        width="{{ section.settings.image.width }}"
+                        height="{{ section.settings.image.height }}"
+                    >
+                    {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% assign experience_number = product.metafields.ticket.te_numbers %}
+    {% assign experience_text = product.metafields.ticket.te_text %}
+    <div class="experience-stat">
+        {% for i in (0..3) %}
+            <div class="stat-item">
+                <span class="stat-quantity">{{ experience_number[i] }}</span>
+                <span class="stat-desc">{{ experience_text[i] }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Experience",
+  "class": "spaced-section spaced-section--full-width product-experience",
+  "settings": [
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "Header Title"
+    },
+    {
+        "type": "image_picker",
+        "id": "image",
+        "label": "t:sections.image-with-text.settings.image.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Experience"
+    }
+  ]
+}
+{% endschema %}

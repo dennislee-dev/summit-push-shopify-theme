@@ -1,0 +1,182 @@
+{
+  "current": {
+    "colors_solid_button_labels": "#FFFFFF",
+    "colors_accent_1": "#121212",
+    "colors_accent_2": "#334FB4",
+    "colors_text": "#121212",
+    "colors_outline_button_labels": "#121212",
+    "colors_background_1": "#FFFFFF",
+    "colors_background_2": "#F3F3F3",
+    "type_header_font": "assistant_n4",
+    "type_body_font": "assistant_n4",
+    "social_instagram_link": "http:\/\/instagram.com\/",
+    "favicon": "shopify:\/\/shop_images\/image_12_6317ac79-200d-42f5-82e9-00ab45c6ffbb.png",
+    "next_event_badge": "On sale soon",
+    "next_event": "snowbasin-ut",
+    "api_url": "https:\/\/eventscrm.ifit.com\/api\/",
+    "checkout_logo_image": "shopify:\/\/shop_images\/image_12_6317ac79-200d-42f5-82e9-00ab45c6ffbb.png",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "announcement-bar-0": {
+            "type": "announcement",
+            "settings": {
+              "text": "Registration Now Open! Early Bird Pricing Ends March 31st",
+              "color_scheme": "inverse",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "announcement-bar-0"
+        ],
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "color_scheme": "background-1",
+          "logo": "shopify:\/\/shop_images\/image_11_11ac6816-42b8-49f6-833c-462954531519.png",
+          "logo_width": 250,
+          "logo_position": "middle-left",
+          "menu": "main-menu",
+          "show_line_separator": true,
+          "enable_sticky_header": true,
+          "timer": "04\/01\/2022, 12:00 AM",
+          "badge_text": "Earlybird Pricing Ends in",
+          "event_details": "Snowbasin, UT - June 4, 2022",
+          "event_url": "",
+          "show_timer": true
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "d227cfdd-8adb-4281-8ba4-c9262e434d07": {
+            "type": "image",
+            "disabled": true,
+            "settings": {
+              "image": "shopify:\/\/shop_images\/footer-logo.png",
+              "image_width": 100,
+              "alignment": "center"
+            }
+          },
+          "247e3105-6882-4768-a966-ef69b6757597": {
+            "type": "text",
+            "settings": {
+              "heading": "",
+              "subtext": "<p><a href=\"\/pages\/contact\" title=\"Contact\"><strong>Contact Us<\/strong><\/a><\/p><p><a href=\"https:\/\/instagram.com\/ifitevents\" target=\"_blank\" title=\"https:\/\/instagram.com\/ifitevents\"><strong>Instagram<\/strong><\/a><\/p>"
+            }
+          },
+          "footer-0": {
+            "type": "link_list",
+            "settings": {
+              "heading": "",
+              "menu": "footer"
+            }
+          }
+        },
+        "block_order": [
+          "d227cfdd-8adb-4281-8ba4-c9262e434d07",
+          "247e3105-6882-4768-a966-ef69b6757597",
+          "footer-0"
+        ],
+        "settings": {
+          "color_scheme": "background-1",
+          "newsletter_enable": false,
+          "newsletter_heading": "Subscribe to our emails",
+          "show_social": false,
+          "enable_country_selector": false,
+          "enable_language_selector": false,
+          "payment_enable": false
+        }
+      },
+      "email-bar-html": {
+        "type": "email-bar-html",
+        "settings": {
+          "heading": "Join the list for first crack at limited tickets!",
+          "custom_html": "<div class=\"klaviyo-form-SadFX3\"><\/div>",
+          "css_class": ""
+        }
+      },
+      "page-register-header": {
+        "type": "page-register-header",
+        "settings": {
+          "title": "Welcome<br>To iFIT Summit Push.",
+          "background_image": "shopify:\/\/shop_images\/Screen_Shot_2022-02-28_at_2.24.50_PM.png"
+        }
+      },
+      "page-register-form": {
+        "type": "page-register-form",
+        "settings": {
+          "intro": "<p>Please take a moment to fill out and verify the following information before your event.<\/p>"
+        }
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {
+      "colors_solid_button_labels": "#FFFFFF",
+      "colors_accent_1": "#121212",
+      "colors_accent_2": "#334FB4",
+      "colors_text": "#121212",
+      "colors_outline_button_labels": "#121212",
+      "colors_background_1": "#FFFFFF",
+      "colors_background_2": "#F3F3F3",
+      "type_header_font": "assistant_n4",
+      "type_body_font": "assistant_n4",
+      "sections": {
+        "announcement-bar": {
+          "type": "announcement-bar",
+          "blocks": {
+            "announcement-bar-0": {
+              "type": "announcement",
+              "settings": {
+                "color_scheme": "background-1"
+              }
+            }
+          },
+          "block_order": [
+            "announcement-bar-0"
+          ],
+          "settings": {}
+        }
+      }
+    },
+    "Craft": {
+      "colors_solid_button_labels": "#EFECEC",
+      "colors_accent_1": "#2A332F",
+      "colors_accent_2": "#476154",
+      "colors_text": "#1C1A1A",
+      "colors_outline_button_labels": "#7B8382",
+      "colors_background_1": "#EFECEC",
+      "colors_background_2": "#C1BCAE",
+      "type_header_font": "americana_n4",
+      "type_body_font": "quattrocento_sans_n4",
+      "sections": {
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "menu": {
+              "type": "link_list",
+              "settings": {}
+            },
+            "text": {
+              "type": "text",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "menu",
+            "text"
+          ],
+          "settings": {
+            "color_scheme": "accent-1"
+          }
+        }
+      }
+    }
+  }
+}

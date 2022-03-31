@@ -1,0 +1,613 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
+  {%- style -%}
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }}::before,
+    #Banner-{{ section.id }} .banner__media::before,
+    #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+      padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+      content: '';
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }}::before,
+    #Banner-{{ section.id }} .banner__media::before {
+      padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+      content: '';
+      display: block;
+    }
+  }
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- style -%}
+  #Banner-{{ section.id }}::after {
+    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+{%- endstyle -%}
+
+<div id="Banner-{{ section.id }}" class="banner banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.adapt_height_first_image and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}">
+  {%- if product.metafields.ticket.main_banner != blank -%}
+    {% assign img = product.metafields.ticket.main_banner | first %} 
+    {% assign img = img[0] %}
+    {% assign mobile_img = product.metafields.ticket.mobile_main_banner | first %} 
+    {% assign mobile_img = mobile_img[0] %} 
+    <div class="banner__media media{% if img == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}">
+      <img
+        srcset="{%- if img.width >= 375 -%}{{ img[0].cloudinary_src | append: 'w_375' }} 375w,{%- endif -%}
+          {%- if img.width >= 750 -%}{{ img.cloudinary_src | append: 'w_750' }} 750w,{%- endif -%}
+          {%- if img.width >= 1100 -%}{{ img.cloudinary_src | append: 'w_1100' }} 1100w,{%- endif -%}
+          {%- if img.width >= 1500 -%}{{ img.cloudinary_src | append: 'w_1500' }} 1500w,{%- endif -%}
+          {%- if img.width >= 1780 -%}{{ img.cloudinary_src | append: 'w_1780' }} 1780w,{%- endif -%}
+          {%- if img.width >= 2000 -%}{{ img.cloudinary_src | append: 'w_2400' }} 2400w,{%- endif -%}
+          {%- if img.width >= 3000 -%}{{ img.cloudinary_src | append: 'w_3000' }} 3000w,{%- endif -%}
+          {%- if img.width >= 3840 -%}{{ img.cloudinary_src | append: 'w_3840' }} 3840w,{%- endif -%}
+          {{ img.cloudinary_src }} {{ img.width }}w"
+        src="{{ img.cloudinary_src | append: 'w_2400' }}"
+        loading="lazy"
+        alt="{{ img.alt | escape }}"
+        width="{{ img.width }}"
+        height="{{ img.width | divided_by: img.aspect_ratio }}"
+        class="d-none d-sm-block"
+      >
+      <img
+        srcset="{%- if mobile_img.width >= 375 -%}{{ mobile_img.cloudinary_src | append: 'w_375' }} 375w,{%- endif -%}
+          {%- if mobile_img.width >= 750 -%}{{ mobile_img .cloudinary_src| append: 'w_750' }} 750w,{%- endif -%}
+          {%- if mobile_img.width >= 1100 -%}{{ mobile_img.cloudinary_src | append: 'w_1100' }} 1100w,{%- endif -%}
+          {%- if mobile_img.width >= 1500 -%}{{ mobile_img.cloudinary_src | append: 'w_1500' }} 1500w,{%- endif -%}
+          {%- if mobile_img.width >= 1780 -%}{{ mobile_img.cloudinary_src | append: 'w_1780' }} 1780w,{%- endif -%}
+          {%- if mobile_img.width >= 2000 -%}{{ mobile_img.cloudinary_src | append: 'w_2000' }} 2000w,{%- endif -%}
+          {%- if mobile_img.width >= 3000 -%}{{ mobile_img.cloudinary_src | append: 'w_3000' }} 3000w,{%- endif -%}
+          {%- if mobile_img.width >= 3840 -%}{{ mobile_img.cloudinary_src | append: 'w_3840' }} 3840w,{%- endif -%}
+          {{ mobile_img.cloudinary_src }} {{ mobile_img.width }}w"
+        src="{{ mobile_img.cloudinary_src | append: 'w_1500' }}"
+        loading="lazy"
+        alt="{{ mobile_img.alt | escape }}"
+        width="{{ mobile_img.width }}"
+        height="{{ mobile_img.width | divided_by: mobile_img.aspect_ratio }}"
+        class="d-block d-sm-none"
+      >
+    </div>
+  {%- elsif section.settings.image != blank -%}
+    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}">
+      <img
+        srcset="{%- if section.settings.image.width >= 375 -%}{{ section.settings.image | img_url: '375x' }} 375w,{%- endif -%}
+          {%- if section.settings.image.width >= 750 -%}{{ section.settings.image | img_url: '750x' }} 750w,{%- endif -%}
+          {%- if section.settings.image.width >= 1100 -%}{{ section.settings.image | img_url: '1100x' }} 1100w,{%- endif -%}
+          {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | img_url: '1500x' }} 1500w,{%- endif -%}
+          {%- if section.settings.image.width >= 1780 -%}{{ section.settings.image | img_url: '1780x' }} 1780w,{%- endif -%}
+          {%- if section.settings.image.width >= 2000 -%}{{ section.settings.image | img_url: '2000x' }} 2000w,{%- endif -%}
+          {%- if section.settings.image.width >= 3000 -%}{{ section.settings.image | img_url: '3000x' }} 3000w,{%- endif -%}
+          {%- if section.settings.image.width >= 3840 -%}{{ section.settings.image | img_url: '3840x' }} 3840w,{%- endif -%}
+          {{ section.settings.image | img_url: 'master' }} {{ section.settings.image.width }}w"
+        sizes="{% if section.settings.image_2 != blank and section.settings.stack_images_on_mobile %}(min-width: 750px) 50vw, 100vw{% elsif section.settings.image_2 != blank %}50vw{% else %}100vw{% endif %}"
+        src="{{ section.settings.image | img_url: '1500x' }}"
+        loading="lazy"
+        alt="{{ section.settings.image.alt | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
+        {% if section.settings.image_2 != blank %}class="banner__media-image-half"{% endif %}
+      >
+    </div>
+  {%- elsif section.settings.image_2 == blank -%}
+    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}">
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.image_2 != blank -%}
+    <div class="banner__media media{% if section.settings.image != blank %} banner__media-half{% endif %}">
+      <img
+        srcset="{%- if section.settings.image_2.width >= 375 -%}{{ section.settings.image_2 | img_url: '375x' }} 375w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 750 -%}{{ section.settings.image_2 | img_url: '750x' }} 750w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 1100 -%}{{ section.settings.image_2 | img_url: '1100x' }} 1100w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 1500 -%}{{ section.settings.image_2 | img_url: '1500x' }} 1500w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 1780 -%}{{ section.settings.image_2 | img_url: '1780x' }} 1780w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 2000 -%}{{ section.settings.image_2 | img_url: '2000x' }} 2000w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 3000 -%}{{ section.settings.image_2 | img_url: '3000x' }} 3000w,{%- endif -%}
+          {%- if section.settings.image_2.width >= 3840 -%}{{ section.settings.image_2 | img_url: '3840x' }} 3840w,{%- endif -%}
+          {{ section.settings.image_2 | img_url: 'master' }} {{ section.settings.image_2.width }}w"
+        sizes="{% if section.settings.image != blank and section.settings.stack_images_on_mobile %}(min-width: 750px) 50vw, 100vw{% elsif section.settings.image != blank %}50vw{% else %}100vw{% endif %}"
+        src="{{ section.settings.image_2 | img_url: '1500x' }}"
+        loading="lazy"
+        alt="{{ section.settings.image_2.alt | escape }}"
+        width="{{ section.settings.image_2.width }}"
+        height="{{ section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio }}"
+        {% if section.settings.image != blank %}class="banner__media-image-half"{% endif %}
+      >
+    </div>
+  {%- endif -%}
+  <div class="banner__content banner__content--{{ section.settings.desktop_text_box_position }} page-width" {% unless section.settings.show_timer %}style="opacity: 0;"{% endunless %}>
+    <span>{{ product.metafields.ticket.date }}</span>
+    <div class="banner__box color-{{ section.settings.color_scheme }}">
+      <h2 class="banner__heading {% if block.settings.heading_size == 'medium' %}h1{% else %}h0{% endif %}" {{ block.shopify_attributes }}>
+        <span>{{ product.metafields.summitpush.location | escape }}</span>
+      </h2>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h2 class="banner__heading {% if block.settings.heading_size == 'medium' %}h1{% else %}h0{% endif %}" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.heading | escape }}</span>
+            </h2>
+          {%- when 'text' -%}
+            <div class="banner__text" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.text | escape }}</span>
+            </div>
+          {%- when 'buttons' -%}
+            <div class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.button_label_1 != blank -%}
+                <a{% if block.settings.button_link_1 == blank %} role="link" aria-disabled="true"{% else %} href="{{ block.settings.button_link_1 }}"{% endif %} class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}">{{ block.settings.button_label_1 | escape }}</a>
+              {%- endif -%}
+              {%- if block.settings.button_label_2 != blank -%}
+                <a{% if block.settings.button_link_2 == blank %} role="link" aria-disabled="true"{% else %} href="{{ block.settings.button_link_2 }}"{% endif %} class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}">{{ block.settings.button_label_2 | escape }}</a>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    <div class="flash-event-details">
+      <span class="flash-badge-text">{{ section.settings.timer_text }}</span>
+    </div>
+    <div class="flash-events">
+      <div class="timer-wrapper">
+        <div class="timer-item">
+          <div class="timer-number">
+            <span id="days" class="days">
+              00
+            </span>
+          </div>
+          <span>Days</span>
+        </div>
+        <div class="timer-item">
+          <div class="timer-number">
+            <span id="hours" class="hours">
+              00
+            </span>
+          </div>
+          <span>Hrs</span>
+        </div>
+        <div class="timer-item">
+          <div class="timer-number">
+            <span id="minutes" class="minutes">
+              00
+            </span>
+          </div>
+          <span>Mins</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
+  {% assign current = product.selected_or_first_available_variant %}
+  {% assign subscriptionHandle = product.metafields.ticket.subscription_product %}
+  {% assign product_subdscription = all_products[subscriptionHandle] %}
+  {% assign availableSubscription = product_subdscription.selected_or_first_available_variant %}
+  {% assign productQTY = 1 %}
+<div class="container booking-form-container">
+  <div class="top_text_wrapper" style="display: {% if section.settings.show_promo == true %} block {% else %} none {% endif %};">
+    {{ section.settings.promo_text }}
+  </div>
+  <div class="booking_form_wrapper">
+    <div class="product-details">
+      <div class="header-title">
+        <div>Location</div>
+        <div>Dates</div>
+      </div>
+      <div class="ticket-content">
+        <div>{{ product.metafields.summitpush.location }}</div>
+        <div>{{ product.metafields.ticket.date }}</div>
+      </div>
+    </div>
+    <div class="product-payment">
+      {%- form 'product', product, return_to: '/checkout/', id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <div class="product-price product_price_wrapper">
+          <div class="header-title">
+            <div>Ticket Price</div>
+          </div>
+          <div class="ticket-content">
+            <div class="d-flex">
+              <!-- <div class="form-check me-4 pe-3 ps-0"> 
+                {% comment %}
+                <input class="form-check-input paymentOption" type="radio" name="id" id="paymentOption1" checked value="{{ current.id }}">
+                {% endcomment %}
+                <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+                <label class="form-check-label" for="paymentOption1">
+                  {{ current.metafields.details.title }} {{ current.price | money }}
+                  {% comment %}
+                  <input type="hidden" name="properties[{{ current.metafields.details.title }}]" />
+                  {% endcomment %}
+                </label>
+              </div> -->
+              <div class="form-check me-4 pe-3 ps-0 earlybird_wrapper"> 
+                {% comment %}
+                <input class="form-check-input paymentOption" type="radio" name="id" id="paymentOption1" checked value="{{ current.id }}">
+                {% endcomment %}
+                <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+                <label class="form-check-label" for="paymentOption1">
+                  <span class="earlybird_text">Earlybird: </span> {{ product.metafields.my_fields.early_bird_price | money }}
+                  {% comment %}
+                  <input type="hidden" name="properties[{{ current.metafields.details.title }}]" />
+                  {% endcomment %}
+                </label>
+              </div>
+              <div class="form-check me-4 pe-3 ps-0 regular_wrapper"> 
+                {% comment %}
+                <input class="form-check-input paymentOption" type="radio" name="id" id="paymentOption1" checked value="{{ current.id }}">
+                {% endcomment %}
+                <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+                <label class="form-check-label" for="paymentOption1">
+                  Regular: <del>{{ current.compare_at_price | money }}</del>
+                  {% comment %}
+                  <input type="hidden" name="properties[{{ current.metafields.details.title }}]" />
+                  {% endcomment %}
+                </label>
+              </div>
+              {% if subscriptionHandle != blank and product_subdscription.available %}
+                <div class="form-check">
+                  <input class="form-check-input paymentOption" type="radio" name="id" id="paymentOption2" value="{{ availableSubscription.id }}">
+                  <label class="form-check-label" for="paymentOption2">
+                    {{ availableSubscription.metafields.details.title }} {{ product_subdscription.price | money }}
+                    {% comment %}
+                    <input type="hidden" name="properties[{{ availableSubscription.metafields.details.title }}]" />
+                    {% endcomment %}
+                  </label>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="qty_button_wrapper">
+          <label>
+            <span>Qty:</span>
+            <select name="quantity" id="qty_selector_top" value="{{ productQTY }}">
+                {% for i in (1..10) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+            </label>
+          <div class="btn-wrapper">
+            <!-- <input type="text" name="quantity" value="1"> -->
+            <!-- {% if product.tags contains 'coming-soon' %}
+              <span class="btn btn-primary px-5 py-3 fs-4 book-btn float-end coming-soon">
+                Coming Soon
+              </span>
+            {% else %}
+              <button type="submit" name="book" class="btn btn-primary px-5 py-3 fs-4 book-btn">
+                Register
+              </button>
+            {% endif %} -->
+            <button type="submit" name="book" class="btn btn-primary px-5 py-3 fs-4 book-btn">
+              Book
+            </button>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  const sellingPlan = {{ product_subdscription.selling_plan_groups | json }};
+  window.earlybird_date = "{{ product.metafields.ticket.earlybirddate }}";
+
+  $(document).ready(function(){
+    $('a.btn-down').click(function(){
+        $('html, body').animate({scrollTop:768},'100');
+    });
+
+    $(".paymentOption").on("change", function(){
+      if($("#paymentOption2").prop("checked")){
+        console.log(sellingPlan);
+        $.each(sellingPlan, function(i, group){
+          console.log(group);
+          $.each(group.selling_plans, function(j, selling_plan){
+            console.log(selling_plan);
+            var inputSellingDOM = $('<input>', {
+              type: "hidden",
+              name:"selling_plan",
+              value: selling_plan.id,
+              id:"sellingPlanId"
+            });
+            $("#paymentOption2").after(inputSellingDOM);
+          });
+        });
+      } else {
+        console.log($(this).prop( "checked" ));
+        $("#sellingPlanId").remove();
+      }
+    });
+    $("#qty_selector_top").on("change", function(){
+      $("#qty_selector_bottom").val($(this).val());
+    });
+
+  });
+
+  let hasAcceptedTos = false;
+  const productFormTop = $('#{{ product_form_id }}');
+  productFormTop.on('submit', function (e) {
+    if (hasAcceptedTos) return;
+
+    // Submit button
+    const submitButton = productFormTop.find('button[type="submit"]');
+
+    if (!submitButton.attr('disabled')) {
+      // First form submit, use that to clear cart
+      e.preventDefault();
+
+      // Disables submit button
+      submitButton.attr('disabled', true);
+
+      // Clears cart
+      $.ajax({
+        type: 'POST',
+        url: '/cart/clear.js',
+        data: '',
+        dataType: 'json',
+        success: function() { 
+          // Submits again
+          productFormTop.submit();
+          hasAcceptedTos = true;
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product Image Banner",
+  "tag": "section",
+  "class": "spaced-section spaced-section--full-width product-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.image-banner.settings.image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "t:sections.image-banner.settings.image_2.label"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.image-banner.settings.image_height.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.image-banner.settings.image_height.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.image-banner.settings.image_height.options__3.label"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.image-banner.settings.image_height.label",
+      "info": "t:sections.image-banner.settings.image_height.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "adapt_height_first_image",
+      "default": false,
+      "label": "t:sections.image-banner.settings.adapt_height_first_image.label",
+      "info": "t:sections.image-banner.settings.adapt_height_first_image.info"
+    },
+    {
+      "type": "select",
+      "id": "desktop_text_box_position",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:sections.image-banner.settings.desktop_text_box_position.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-banner.settings.desktop_text_box_position.options__2.label"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:sections.image-banner.settings.desktop_text_box_position.options__3.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.image-banner.settings.desktop_text_box_position.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_box",
+      "default": true,
+      "label": "t:sections.image-banner.settings.show_text_box.label"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.image-banner.settings.color_scheme.options__1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.image-banner.settings.color_scheme.options__2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.image-banner.settings.color_scheme.options__3.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.image-banner.settings.color_scheme.options__4.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.image-banner.settings.color_scheme.options__5.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.image-banner.settings.color_scheme.label",
+      "info": "t:sections.image-banner.settings.color_scheme.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image-banner.settings.header.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "stack_images_on_mobile",
+      "default": true,
+      "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_below",
+      "default": true,
+      "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timer",
+      "label": "Show Timer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "timer_text",
+      "label": "Timer text",
+      "default": "On SALE SOON"
+    },
+    {
+      "type": "text",
+      "id": "promo_text",
+      "label": "Promo Text",
+      "default": "First 20 signups invite a friend for free! (Add 2 tickets and use the discount code FIRST20 at checkout)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_promo",
+      "default": true,
+      "label": "Show Promo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.image-banner.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Image banner",
+          "label": "t:sections.image-banner.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "medium",
+              "label": "t:sections.image-banner.blocks.heading.settings.heading_size.options__1.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.image-banner.blocks.heading.settings.heading_size.options__2.label"
+            }
+          ],
+          "default": "medium",
+          "label": "t:sections.image-banner.blocks.heading.settings.heading_size.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.image-banner.blocks.text.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Give customers details about the banner image(s) or content on the template.",
+          "label": "t:sections.image-banner.blocks.text.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.image-banner.blocks.buttons.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "Button label",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_label_1.label",
+          "info": "t:sections.image-banner.blocks.buttons.settings.button_label_1.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_1.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_1.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "default": "Button label",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_label_2.label",
+          "info": "t:sections.image-banner.blocks.buttons.settings.button_label_2.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_2.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_2.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Image Banner",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

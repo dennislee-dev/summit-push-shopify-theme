@@ -1,0 +1,669 @@
+{% assign time = product.metafields.ticket.es_time %}
+{% assign description = product.metafields.ticket.es_description %}
+
+<div id="event-schedule" class="container-fuild itinerary-location itinerary-location--{{ section.id }}">
+    <div class="container">
+        <h2 class="h1 text-center mb-5">{{ section.settings.heading | escape }}</h2>
+
+        <ul class="list-group list-group-flush mb-5">
+            {% if time %}
+                {% for i in (0..9) %}
+                    {% if time[i] != blank %}
+                        <li class="list-group-item itinerary-details {% if i == 0 %}current-page{% endif %}" data-page={{ i }}>
+                            <div class="row pt-2 px-4">
+                                <div class="col-sm-2 col-2 time-wrapper time_wrapper">
+                                    <span class="fw-bold">{{ time[i] }}</span>
+                                </div>
+                                <div class="col-sm-10 col-10 desc_wrapper">
+                                    {{ description[i] }}
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {%- endfor -%}
+            {% else %}
+                {% assign pageMax = section.blocks.size %}
+                {%- for block in section.blocks -%}
+                    {% for i in (1..4) %}
+                        {% assign time = 'time_' | append: i %}
+                        {% assign text = 'text_' | append: i %}
+                        {%- if block.settings[time] != blank and block.settings[text] != blank -%}
+                            <li class="list-group-item itinerary-details {% if blockCounter == 1 %}current-page{% endif %}" data-page={{ blockCounter }}>
+                                <div class="row pt-2 px-4">
+                                    <div class="col-sm-2 col-2 time-wrapper time_wrapper">
+                                        <span class="fw-bold">{{ block.settings[time] }}</span>
+                                    </div>
+                                    <div class="col-sm-10 col-10 desc_wrapper">
+                                        {{ block.settings[text] }}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {%- endfor -%}
+                    {% assign blockCounter  = blockCounter | plus: 1 %}
+                {%- endfor -%}
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Event Schedule",
+  "class": "spaced-section spaced-section--full-width itinerary-container",
+  "settings": [
+    {
+        "type": "select",
+        "id": "column_style",
+        "label": "Number of Column",
+        "options": [
+            {
+                "value": "col-12",
+                "label": "One"
+            },
+            {
+                "value": "col-md-6",
+                "label": "two"
+            }
+        ],
+        "default": "col-12"
+    },
+    {
+        "type": "text",
+        "id": "heading",
+        "default": "Heading",
+        "label": "t:sections.image-with-text.blocks.heading.settings.heading.label"
+    },
+    {
+        "type": "select",
+        "id": "color_scheme",
+        "options": [
+          {
+            "value": "accent-1",
+            "label": "t:sections.footer.settings.color_scheme.options__1.label"
+          },
+          {
+            "value": "accent-2",
+            "label": "t:sections.footer.settings.color_scheme.options__2.label"
+          },
+          {
+            "value": "background-1",
+            "label": "t:sections.footer.settings.color_scheme.options__3.label"
+          },
+          {
+            "value": "background-2",
+            "label": "t:sections.footer.settings.color_scheme.options__4.label"
+          },
+          {
+            "value": "inverse",
+            "label": "t:sections.footer.settings.color_scheme.options__5.label"
+          }
+        ],
+        "default": "background-1",
+        "label": "t:sections.footer.settings.color_scheme.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content_1",
+      "name": "Day 1",
+      "limit": 1,
+      "settings": [
+        {
+            "type": "text",
+            "id": "time_1",
+            "default": "00:00 - 00:00",
+            "label": "Add Time (XX:XX - XX:XX)"
+        },
+        {
+            "type": "richtext",
+            "id": "text_1",
+            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+        },
+        {
+            "type": "text",
+            "id": "time_2",
+            "default": "00:00 - 00:00",
+            "label": "Add Time (XX:XX - XX:XX)"
+        },
+        {
+            "type": "richtext",
+            "id": "text_2",
+            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+        },
+        {
+            "type": "text",
+            "id": "time_3",
+            "default": "00:00 - 00:00",
+            "label": "Add Time (XX:XX - XX:XX)"
+        },
+        {
+            "type": "richtext",
+            "id": "text_3",
+            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+        },
+        {
+            "type": "text",
+            "id": "time_4",
+            "default": "00:00 - 00:00",
+            "label": "Add Time (XX:XX - XX:XX)"
+        },
+        {
+            "type": "richtext",
+            "id": "text_4",
+            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+        }
+      ]
+    },
+    {
+        "type": "content_2",
+        "name": "Day 2",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_3",
+        "name": "Day 3",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_4",
+        "name": "Day 4",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_5",
+        "name": "Day 5",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_6",
+        "name": "Day 6",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_7",
+        "name": "Day 7",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_8",
+        "name": "Day 8",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_9",
+        "name": "Day 9",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    },
+    {
+        "type": "content_10",
+        "name": "Day 10",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "time_1",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_1",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_2",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_2",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_3",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_3",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            },
+            {
+                "type": "text",
+                "id": "time_4",
+                "default": "00:00 - 00:00",
+                "label": "Add Time (XX:XX - XX:XX)"
+            },
+            {
+                "type": "richtext",
+                "id": "text_4",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "t:sections.image-with-text.blocks.text.settings.text.label"
+            }
+        ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Event schedule",
+      "blocks": [
+        {
+          "type": "content_1"
+        }
+      ]
+    }
+  ] 
+}
+{% endschema %}

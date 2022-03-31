@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.register__header {
+  height: 80vh;
+  max-height: 468px;
+  display: flex;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 200px;
+}

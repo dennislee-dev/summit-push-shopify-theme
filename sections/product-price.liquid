@@ -1,0 +1,228 @@
+<div class="product_price_container" style="background-image:url({{ section.settings.background | img_url: '3000x' }});">
+    {%- assign product_form_id = 'product-form-' | append: section.id -%}
+    {% assign current = product.selected_or_first_available_variant %}
+    {% assign subscriptionHandle = product.metafields.ticket.subscription_product %}
+    {% assign product_subdscription = all_products[subscriptionHandle] %}
+    {% assign availableSubscription = product_subdscription.selected_or_first_available_variant %}
+    {% assign productQTY = 1 %}
+    <div class="product_price_title_wrapper">
+        {{ section.settings.title }}
+    </div>
+    <div class="product_price_desc_wrapper">
+        {{ section.settings.description }}
+    </div>
+
+    <div class="product_price_form_wrapper">
+      {%- form 'product', product, return_to: '/checkout/', id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+      <p class="ticket_price_text">TICKET PRICES</p>
+      <div class="prices_wrapper">
+        <div class="price_each_wrapper first_wrapper">
+          <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+          <label class="form-check-label" for="paymentOption1">
+          <span class="earlybird">Earlybird: </span> {{ current.price | money }}
+          </label>
+        </div>
+        <div class="price_each_wrapper">
+          <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+          <label class="form-check-label" for="paymentOption1">
+          Regular: <del>{{ current.compare_at_price | money }}</del>
+        </div>
+        <!-- {% if subscriptionHandle != blank and product_subdscription.available %}
+          <div class="form-check">
+            <input class="form-check-input paymentOption" type="radio" name="id" id="paymentOption2" value="{{ availableSubscription.id }}">
+            <label class="form-check-label" for="paymentOption2">
+                {{ availableSubscription.metafields.details.title }} {{ product_subdscription.price | money }}
+            </label>
+            </div>
+        {% endif %} -->
+       
+      </div>
+      <div class="product_qty_button_wrapper">
+        <label>
+            <span>Qty:</span>
+            <select name="quantity" id="qty_selector_bottom" value="{{ productQTY }}">
+                {% for i in (1..10) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+          </label>
+          <div class="btn-wrapper">
+              <button type="submit" name="book" class="btn btn-primary px-5 py-3 fs-4 book-btn product_book_btn">
+              Book
+              </button>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+    <div class="product_price_bottom_text_wrapper">
+      {{ section.settings.bottom_text }}
+    </div>
+
+
+
+
+
+    <!-- <div class="container pdp_booking-form-container">
+    <div class="top_text_wrapper">
+        First 20 signups invite a friend for free! (Add 2 tickets and use the discount code FIRST20 at checkout)
+    </div>
+    <div class="booking_form_wrapper">
+        <div class="product-details">
+        <div class="header-title">
+            <div>Location</div>
+            <div>Dates</div>
+        </div>
+        <div class="ticket-content">
+            <div>{{ product.title }}</div>
+            <div>{{ product.metafields.ticket.date }}</div>
+        </div>
+        </div>
+        <div class="product-payment">
+        {%- form 'product', product, return_to: '/checkout/', id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <div class="product-price product_price_wrapper">
+            <div class="header-title">
+                <div>Ticket Price</div>
+            </div>
+            <div class="ticket-content">
+                <div class="d-flex">
+                <div class="form-check me-4 pe-3 ps-0 earlybird_wrapper"> 
+                    <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+                    <label class="form-check-label" for="paymentOption1">
+                    <span class="earlybird_text">Earlybird: </span> {{ current.price | money }}
+
+                    </label>
+                </div>
+                <div class="form-check me-4 pe-3 ps-0 regular_wrapper"> 
+
+                    <input class="form-check-input paymentOption" type="hidden" name="id" value="{{ current.id }}">
+                    <label class="form-check-label" for="paymentOption1">
+                    Regular: <del>{{ current.price | money }}</del>
+
+                    </label>
+                </div>
+                {% if subscriptionHandle != blank and product_subdscription.available %}
+                    <div class="form-check">
+                    <input class="form-check-input paymentOption" type="radio" name="id" id="paymentOption2" value="{{ availableSubscription.id }}">
+                    <label class="form-check-label" for="paymentOption2">
+                        {{ availableSubscription.metafields.details.title }} {{ product_subdscription.price | money }}
+
+                    </label>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            </div>
+            <div class="qty_button_wrapper">
+            <label>
+                <span>Qty:</span>
+                <select name="quantity" id="qty_selector_bottom" value="{{ productQTY }}">
+                    {% for i in (1..10) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+                </label>
+            <div class="btn-wrapper">
+                <button type="submit" name="book" class="btn btn-primary px-5 py-3 fs-4 book-btn">
+                Book
+                </button>
+            </div>
+            </div>
+        {% endform %}
+        </div>
+    </div>
+    </div> -->
+</div>
+<script>
+  
+  // const sellingPlan = {{ product_subdscription.selling_plan_groups | json }};
+
+  $(".paymentOption").on("change", function(){
+    if($("#paymentOption4").prop("checked")){
+      console.log(sellingPlan);
+      $.each(sellingPlan, function(i, group){
+        console.log(group);
+        $.each(group.selling_plans, function(j, selling_plan){
+          console.log(selling_plan);
+          var inputSellingDOM = $('<input>', {
+            type: "hidden",
+            name:"selling_plan",
+            value: selling_plan.id,
+            id:"sellingPlanId"
+          });
+          $("#paymentOption4").after(inputSellingDOM);
+        });
+      });
+    } else {
+      console.log($(this).prop( "checked" ));
+      $("#sellingPlanId").remove();
+    }
+  });
+
+  $("#qty_selector_bottom").on("change", function(){
+    $("#qty_selector_top").val($(this).val());
+  });
+  
+  const productForm = $('#{{ product_form_id }}');
+  productForm.on('submit', function (e) {
+    if (hasAcceptedTos) return;
+  
+    // Submit button
+    const submitButton = productForm.find('button[type="submit"]');
+  
+    if (!submitButton.attr('disabled')) {
+      // First form submit, use that to clear cart
+      e.preventDefault();
+  
+      // Disables submit button
+      submitButton.attr('disabled', true);
+  
+      // Clears cart
+      $.ajax({
+        type: 'POST',
+        url: '/cart/clear.js',
+        data: '',
+        dataType: 'json',
+        success: function() { 
+          // Submits again
+          productForm.submit();
+          hasAcceptedTos = true;
+        }
+      });
+    }
+  });
+</script>
+{% schema %}
+{
+  "name": "Product Price",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Ready to get started?"
+    },
+   {
+     "type": "text",
+     "id": "description",
+     "label": "Description",
+     "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. adie nsectetur aorem ipsum dolor sit amet,"
+   },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom Text",
+      "default": "First 20 signups invite a friend for free! (Add 2 tickets and use the discount code FIRST20 at checkout)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Price"
+    }
+  ]
+}
+{% endschema %}
